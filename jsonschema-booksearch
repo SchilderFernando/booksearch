@@ -1,0 +1,228 @@
+use booksearchdb;
+
+db.createCollection(
+    "libro",
+    {
+        validator:
+        {
+            $jsonSchema:
+            {
+                bsonType:"object",
+                description: "Documento que contiene los detalles de un libro.",
+                required: ["titulo, precio, stock, categoria, editorial, proveedor"],
+                properties:{
+                    "titulo":
+                    {
+                        bsonType:"string",
+                        description: "Titulo del libro del tipo 'string'."
+                    },
+                    "precio":
+                    {
+                        bsonType:"double",
+                        description: "Precio del libro del tipo 'double'."
+                    },
+                    "stock":
+                    {
+                        bsonType:"int",
+                        description: "Stock del libro del tipo 'int'."
+                    },
+                    "categoria":
+                    {
+                        enum:
+                        ["Científicos","Literatura y lingüísticos","De viaje","Biografías",
+                        "Libro de texto","Libros de gran formato (coffee table book)","De referencia o consulta",
+                        "Monografías","Recreativos","Poéticos","Juveniles","Ficción"
+                        ],
+                        description: "Categoria del libro del tipo string (tiene que pertenecer a la lista de categorías posibles)'."
+                    },
+                    "editorial":
+                    {
+                        bsonType:"string",
+                        description: "Editorial del libro del tipo 'string'."
+                    },
+                    "proveedor_id":
+                    {
+                        bsonType:"string",
+                        description: "Proveedor del libro del tipo 'string'."
+                    }
+
+                }
+            }
+        }
+    }
+
+);
+
+db.createCollection(
+    "venta",
+    {
+        validator:
+        {
+            $jsonSchema:
+            {
+                bsonType: "object",
+                description: "Documento que contiene los detalles de una venta.",
+                required: ["fechaCompra","cliente_id","empleado_id","detallesVenta"],
+                properties:
+                {
+                    "fechaCompra":
+                    {
+                       bsonType: "date",
+                       description: "Fecha de compra del tipo 'date'."
+                    },
+                    "cliente_id":
+                    {
+                        bsonType: "objectId",
+                        description: "ObjectId del cliente asociado a la venta del tipo 'objectId'."
+                    },
+                    "empleado_id":
+                    {
+                        bsonType:"objectId",
+                        description: "ObjectId del empleado asociado a la venta del tipo 'objectId'."
+                    },
+                    "detallesVenta":
+                    {
+                        bsonType: "array",
+                        description: "Detalles de la venta asociados a la venta del tipo 'array'.",
+                        items:
+                        {
+                            bsonType: "object",
+                            description: "Detalle de venta del tipo 'object'.",
+                            required:["libro_id","cantidad"],
+                            properties:
+                            {
+                                "libro_id":
+                                {
+                                    bsonType:"objectId",
+                                    description: "ObjectId del libro asociado al detalle de la venta del tipo 'objectId'.",
+                                },
+                                "cantidad":
+                                {
+                                    bsonType:"int",
+                                    description: "Cantidad de libros vendidos del tipo 'int'.",
+                                    minItems: 1
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+);
+
+db.createCollection(
+    "cliente",
+    {
+    validator:
+        {
+        $jsonSchema:
+            {
+            bsonType:"object",
+            description: "Documento que contiene en detalle a los clientes.",
+            required: ["dni","nombre","apellido","telefono","correo"],
+            properties:{
+                    "dni":
+                    {
+                        bsonType:"string",
+                        description: "DNI del cliente del tipo 'string'."
+                    },
+                    "nombre":
+                    {
+                        bsonType:"string",
+                        description: "Nombre del cliente del tipo 'string'."
+                    },
+                    "apellido":
+                    {
+                        bsonType:"string",
+                        description: "Apellido del cliente del tipo 'string'."
+                    },
+                    "telefono":
+                    {
+                        bsonType:"string",
+                        description: "Telefono del cliente del tipo 'string'."
+                    },
+                    "correo":
+                    {
+                        bsonType:"string",
+                        description: "Correo del cliente del tipo 'string'."
+                    },
+                }
+            }
+        }
+    }
+);
+
+db.createCollection(
+    "proveedor",
+    {
+    validator:
+        {
+        $jsonSchema:
+            {
+            bsonType:"object",
+            description: "Documento que contiene en detalle a los clientes.",
+            required: ["dni","nombre","apellido","telefono"],
+            properties:{
+                    "nombre":
+                    {
+                        bsonType:"string",
+                        description: "Nomnre del proveedor del tipo 'string'."
+                    },
+                    "telefono":
+                    {
+                        bsonType:"string",
+                        description: "Telefono del proveedor del tipo 'string'."
+                    },
+                    "ruc":
+                    {
+                        bsonType:"string",
+                        description: "RUC del proveedor del tipo 'string'."
+                    },
+                    "direccion":
+                    {
+                        bsonType:"string",
+                        description: "Direccion del proveedor del tipo 'string'."
+                    }
+                }
+            }
+        }
+    }
+);
+
+db.createCollection(
+    "empleado",
+    {
+    validator:
+        {
+        $jsonSchema:
+            {
+            bsonType:"object",
+            description: "Documento que contiene en detalle a los empleados.",
+            required: ["dni","nombre","apellido","telefono"],
+            properties:{
+                    "dni":
+                    {
+                        bsonType:"string",
+                        description: "DNI del empleado del tipo 'string'."
+                    },
+                    "nombre":
+                    {
+                        bsonType:"string",
+                        description: "Nombre del empleado del tipo 'string'."
+                    },
+                    "apellido":
+                    {
+                        bsonType:"string",
+                        description: "Apellido del empleado del tipo 'string'."
+                    },
+                    "telefono":
+                    {
+                        bsonType:"string",
+                        description: "Telefono del empleado del tipo 'string'."
+                    }
+                }
+            }
+        }
+    }
+);
