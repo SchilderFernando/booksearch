@@ -184,7 +184,7 @@ db.createCollection(
         $jsonSchema:
             {
             bsonType:"object",
-            description: "Documento que contiene en detalle a los clientes.",
+            description: "Documento que contiene en detalle a los proveedores.",
             required: ["nombre","telefono","ruc","direccion"],
             properties:{
                     "nombre":
