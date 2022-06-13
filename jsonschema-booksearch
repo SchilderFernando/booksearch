@@ -9,12 +9,35 @@ db.createCollection(
             {
                 bsonType:"object",
                 description: "Documento que contiene los detalles de un libro.",
-                required: ["titulo, precio, stock, categoria, editorial, proveedor"],
+                required: ["titulo", "autor", "precio", "stock", "categoria", "editorial", "proveedor_id"],
                 properties:{
                     "titulo":
                     {
                         bsonType:"string",
                         description: "Titulo del libro del tipo 'string'."
+                    },
+                    "autor":
+                    {
+                        bsonType:"object",
+                        description: "Autor del libro del tipo 'object'.",
+                        required:["nombre", "apellido","pais"],
+                        properties:{
+                            "nombre":
+                            {
+                                bsonType:"string",
+                                description: "Nombre del autor del tipo 'string'."
+                            },
+                            "apellido":
+                            {
+                                bsonType:"string",
+                                description: "Apellido del autor del tipo 'string'."
+                            },
+                            "pais":
+                            {
+                                bsonType:"string",
+                                description: "Pais del autor del tipo 'string'."
+                            }
+                        }
                     },
                     "precio":
                     {
@@ -42,8 +65,8 @@ db.createCollection(
                     },
                     "proveedor_id":
                     {
-                        bsonType:"string",
-                        description: "Proveedor del libro del tipo 'string'."
+                        bsonType:"objectId",
+                        description: "Proveedor del libro del tipo 'objectId'."
                     }
 
                 }
@@ -162,7 +185,7 @@ db.createCollection(
             {
             bsonType:"object",
             description: "Documento que contiene en detalle a los clientes.",
-            required: ["dni","nombre","apellido","telefono"],
+            required: ["nombre","telefono","ruc","direccion"],
             properties:{
                     "nombre":
                     {
